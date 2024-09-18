@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>HTML5 Forms</title>
+    <script>
+        function showAge(newVal) {
+            document.getElementById("sAge").innerHTML = newVal
+        }
+
+        function checkPasswords() {
+            const elPass = document.getElementById("password")
+            const elConfirmPass = document.getElementById("confirmPassword")
+            // console.log('elPass.value', elPass.value)
+            // console.log('elConfirmPass.value', elConfirmPass.value)
+
+            if (elPass.value !== elConfirmPass.value) {
+                elConfirmPass.setCustomValidity("Passwords do not match")
+            } else {
+                elConfirmPass.setCustomValidity("")
+            }
+            // Optionally - show the message right away:
+            elConfirmPass.reportValidity()
+        }
+
+        function onSubmit(ev) {
+            ev.preventDefault()
+            console.log("Submit form")
+
+            const name = document.querySelector('input[name="fullName"]').value
+            const password = document.querySelector('input[name="password"]').value
+            const phone = document.querySelector('input[name="phone"]').value
+            console.log("name:", name)
+            console.log("password:", password)
+            console.log("phone:", phone)
+            // ...
+        }
+    </script>
+    <style>
+        input:invalid {
+            color: red;
+        }
+
+        td input {
+            width: 70%;
+        }
+
+        td.checkbox-input label {
+            display: flex;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Sign Up Form</h2>
+
+    <form id="frmRegister" onsubmit="onSubmit(event)">
+        <table>
+            <tr>
+                <td><label for="fullName">Name:</label></td>
+                <td>
+                    <input required type="text" id="fullName" name="fullName" placeholder="First and last name" />
+                </td>
+            </tr>
+            <tr>
+                <td><label for="password">Password:</label></td>
+                <td>
+                    <input type="password" id="password" name="password" onchange="checkPasswords()" />
+                </td>
+            </tr>
+            <tr>
+                <td><label for="confirmPassword">Confirm password:</label></td>
+                <td>
+                    <input type="password" id="confirmPassword" name="confirmPassword" onchange="checkPasswords()" />
+                </td>
+            </tr>
+            <tr>
+                <td><label for="phone">Phone #:</label></td>
+                <td>
+                    <input id="phone" type="tel" name="phone" placeholder="xx(x)-xxxxxxx" pattern="[\d]{2,3}-[\d]{7}" />
+                </td>
+            </tr>
+            <tr>
+                <td><label for="email">E-mail:</label></td>
+                <td><input type="email" name="email" id="email" /></td>
+            </tr>
+            <tr>
+                <td><label for="age">Age:</label></td>
+                <td>
+                    <input type="range" id="age" name="age" step="5" min="10" max="120" value="25"
+                        oninput="showAge(this.value)" />
+                    <span id="sAge">25</span>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="dob">Date of Birth:</label></td>
+                <td>
+                    <input value="1989-03-28" type="date" id="dob" name="dob" />
+                </td>
+            </tr>
+            <tr>
+                <td><label for="creditcard">Credit card:</label></td>
+                <td>
+                    <input type="text" id="creditcard" name="creditcard" autocomplete="off" />
+                </td>
+            </tr>
+            <tr>
+                <td><label for="contact">Contact:</label></td>
+                <td>
+                    <input type="email" id="contact" name="contact" list="contactList" />
+                    <datalist id="contactList">
+                        <option value="puky@puk.com" label="Puki" />
+                        <option value="support@example.com" label="Support" />
+                        <option value="admin@example.com" label="Administrator" />
+                    </datalist>
+                </td>
+            </tr>
+            <tr>
+                <td class="checkbox-input">
+                    <label>Happy? <input type="checkbox" /> </label>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="imgFiles">Select images:</label></td>
+                <td><input type="file" id="imgFiles" name="imgFiles" multiple /></td>
+            </tr>
+        </table>
+        <button>Register</button>
+        <br /><br />
+        <button formnovalidate>Register (no validate)</button>
+        <!-- <input type="button"  value="Save" /> -->
+    </form>
+    <br /><br />
+
+    Search: <input type="search" id="search" autofocus /><br />
+    Favorite color:
+    <input type="color" id="color" name="color" form="frmRegister" value="#0000ff" /> <br />
+    <button form="frmRegister">Submit from outside</button>
+</body>
+
+</html>
